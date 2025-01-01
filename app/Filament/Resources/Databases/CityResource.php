@@ -21,8 +21,6 @@ class CityResource extends Resource
 
     protected static ?string $navigationGroup = 'قواعد البيانات';
 
-    protected static ?int $navigationSort = 2;
-
     protected static ?string $label = 'المدينة';
 
     protected static ?string $modelLabel = 'مدينة';
@@ -76,5 +74,10 @@ class CityResource extends Resource
             'create' => Pages\CreateCity::route('/create'),
             'edit' => Pages\EditCity::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 98;
     }
 }

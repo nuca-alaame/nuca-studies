@@ -18,8 +18,6 @@ class SectorResource extends Resource
 
     protected static ?string $navigationGroup = 'قواعد البيانات';
 
-    protected static ?int $navigationSort = 1;
-
     protected static ?string $label = 'القطاع';
 
     protected static ?string $modelLabel = 'قطاع';
@@ -76,5 +74,10 @@ class SectorResource extends Resource
             'create' => Pages\CreateSector::route('/create'),
             'edit' => Pages\EditSector::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 98;
     }
 }

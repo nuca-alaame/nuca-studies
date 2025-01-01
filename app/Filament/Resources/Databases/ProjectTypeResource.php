@@ -21,8 +21,6 @@ class ProjectTypeResource extends Resource
 
     protected static ?string $navigationGroup = 'قواعد البيانات';
 
-    protected static ?int $navigationSort = 4;
-
     protected static ?string $label = 'نوع أعمال';
 
     protected static ?string $modelLabel = 'نوع أعمال';
@@ -80,5 +78,10 @@ class ProjectTypeResource extends Resource
             'create' => Pages\CreateProjectType::route('/create'),
             'edit' => Pages\EditProjectType::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 98;
     }
 }

@@ -21,8 +21,6 @@ class CompanyResource extends Resource
 
     protected static ?string $navigationGroup = 'قواعد البيانات';
 
-    protected static ?int $navigationSort = 2;
-
     protected static ?string $label = 'الشركة';
 
     protected static ?string $modelLabel = 'شركة';
@@ -79,5 +77,10 @@ class CompanyResource extends Resource
             'create' => Pages\CreateCompany::route('/create'),
             'edit' => Pages\EditCompany::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 98;
     }
 }
