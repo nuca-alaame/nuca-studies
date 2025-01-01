@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->foreignId('city_id')->constrained('cities')->restrictOnDelete();
             $table->foreignId('category_id')->constrained('project_categories')->restrictOnDelete();
             $table->foreignId('company_id')->constrained('companies')->restrictOnDelete();
             $table->string('assignment_no')->nullable();

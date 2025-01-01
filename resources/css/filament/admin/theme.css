@@ -26,3 +26,7 @@ html {
 .fi-topbar nav, .fi-sidebar-header {
     @apply bg-white shadow-none
 }
+
+.fi-sidebar-group-button {
+    @apply bg-white rounded-md px-10 py-2
+}

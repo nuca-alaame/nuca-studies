@@ -39,6 +39,26 @@ class ProjectResource extends Resource
                     ->schema([
                         Forms\Components\TextInput::make('name')->required()->label('اسم المشروع'),
                         Forms\Components\Select::make('category_id')->relationship('category', 'name')->required()->label('نوع المشروع'),
+                        Forms\Components\Select::make('sector_id')
+                            ->live()
+                            ->relationship('sector', 'name')
+                            ->required()->label('القطاع')
+                            ->afterStateUpdated(function ($state, callable $set) {
+                                $set('city_id', null);
+                            }),
+                        Forms\Components\Select::make('city_id')
+                            ->options(function (callable $get) {
+                                // Dynamically fetch cities based on selected sector_id
+                                $sectorId = $get('sector_id');
+                                if ($sectorId) {
+                                    return \App\Models\City::where('sector_id', $sectorId)
+                                        ->pluck('name', 'id')
+                                        ->toArray();
+                                }
+
+                                return [];
+                            })
+                            ->required()->label('اسم المدينة'),
                         Forms\Components\Select::make('company_id')->relationship('company', 'name')->required()->label('الشركة المنفذة'),
                         Forms\Components\TextInput::make('assignment_no')->required()->label('رقم أمر الإسناد'),
                         Forms\Components\DatePicker::make('assignment_date')->required()->label('تاريخ أمر الإسناد'),
@@ -52,13 +72,22 @@ class ProjectResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name')->label('اسم المشروع')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('city.name')->label('المدينة')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('category.name')->label('نوع المشروع')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('company.name')->label('اسم الشركة')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('assignment_no')->label('رقم أمر الإسناد')->searchable()->sortable(),
+
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('sector_id')->relationship('sector', 'name')->label('القطاع'),
+                Tables\Filters\SelectFilter::make('city_id')->relationship('city', 'name')->label('المدينة'),
+                Tables\Filters\SelectFilter::make('category_id')->relationship('category', 'name')->label('نوع المشروع'),
+                Tables\Filters\SelectFilter::make('company_id')->relationship('company', 'name')->label('الشركة'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

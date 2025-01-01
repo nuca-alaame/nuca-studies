@@ -35,7 +35,9 @@ class CityResource extends Resource
             ->schema([
                 Forms\Components\Section::make()
                     ->schema([
-                        Forms\Components\TextInput::make('name')->required()->label('اسم المدينة')
+                        Forms\Components\TextInput::make('name')->required()->label('اسم المدينة'),
+                        Forms\Components\Select::make('sector_id')->relationship('sector', 'name')->required()->label('القطاع'),
+
                     ])
             ]);
     }
@@ -44,10 +46,11 @@ class CityResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->label('المدينة')->searchable()->sortable()
+                Tables\Columns\TextColumn::make('name')->label('المدينة')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('sector.name')->label('القطاع')->default('-')->searchable()->sortable(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('sector_id')->relationship('sector', 'name')->label('القطاع'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

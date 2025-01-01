@@ -17,4 +17,14 @@ class Project extends Model
     {
         return $this->belongsTo(Company::class);
     }
+
+    public function city(): BelongsTo
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function sector(): BelongsTo
+    {
+        return $this->belongsTo(Sector::class);
+    }
 }
