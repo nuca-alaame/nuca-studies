@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Noto+Naskh+Arabic:wght@400..700&display=swap');
+
+@import '/vendor/filament/filament/resources/css/theme.css';
+
+@config 'tailwind.config.js';
+
+html {
+    font-size: 18px;
+}
+* {
+    font-family: "Noto Naskh Arabic", tahoma
+}
+
+.fi-logo {
+    @apply !h-[3.7rem]
+}
+
+.fi-sidebar {
+    @apply bg-gray-100
+}
+
+.fi-sidebar-item a:hover {
+    @apply bg-gray-50
+}
+
+.fi-topbar nav, .fi-sidebar-header {
+    @apply bg-white shadow-none
+}

@@ -1,0 +1,18 @@
+@config "./../../tailwind.config.js";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
+
+//@import "../scss/tailwind/forms";
+
+:root[dir="rtl"] {
+  --rtl-font-family: Cairo, "Noto Naskh Arabic", Inter, Arial, "Lucida Grande", sans-serif;
+}
+
+html[dir="rtl"],
+html[dir="rtl"] body {
+  font-family: var(--rtl-font-family);
+}
+
