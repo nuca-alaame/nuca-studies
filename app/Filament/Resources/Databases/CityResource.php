@@ -81,6 +81,6 @@ class CityResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return 98;
+        return 1;
     }
 }

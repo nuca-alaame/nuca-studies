@@ -2,9 +2,15 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\ProjectOperationResource\Pages\CreateProjectOperation;
+use App\Filament\Resources\ProjectOperationResource\Pages\EditProjectOperation;
+use App\Filament\Resources\ProjectOperationResource\Pages\ListProjectOperations;
+use App\Filament\Resources\ProjectOperationResource\RelationManagers\OperationsRelationManager;
 use App\Filament\Resources\ProjectResource\Pages;
 use App\Filament\Resources\ProjectResource\RelationManagers;
 use App\Models\Project;
+use App\Models\ProjectOperation;
+use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -27,7 +33,7 @@ class ProjectResource extends Resource
 
     protected static ?string $modelLabel = 'مشروع';
 
-    protected static ?string $pluralLabel = 'المشروع';
+    protected static ?string $pluralLabel = 'المشروعات';
 
     protected static ?string $navigationLabel = 'قائمة المشروعات';
 
@@ -86,8 +92,16 @@ class ProjectResource extends Resource
                 Tables\Filters\SelectFilter::make('company_id')->relationship('company', 'name')->label('الشركة'),
             ])
             ->actions([
+
+                Tables\Actions\Action::make('الدراسات')
+                    ->color('success')
+                    ->icon('heroicon-m-academic-cap')
+                    ->url(
+                        fn(Project $record): string => static::getUrl('project-operations.index', [
+                            'parent' => $record->id,
+                        ])
+                    ),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -99,7 +113,7 @@ class ProjectResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            // OperationsRelationManager::class
         ];
     }
 
@@ -109,11 +123,19 @@ class ProjectResource extends Resource
             'index' => Pages\ListProjects::route('/'),
             'create' => Pages\CreateProject::route('/create'),
             'edit' => Pages\EditProject::route('/{record}/edit'),
+            'project-operations.index' => ListProjectOperations::route('/{parent}/operations'),
+            'project-operations.create' => CreateProjectOperation::route('/{parent}/operations/create'),
+            'project-operations.edit' => EditProjectOperation::route('/{parent}/operations/{record}/edit'),
         ];
     }
 
     public static function getNavigationSort(): ?int
     {
         return 0;
+    }
+
+    public static function getRecordTitle(Model|\Illuminate\Database\Eloquent\Model|null $record): string|null
+    {
+        return $record->name;
     }
 }

@@ -33,9 +33,9 @@ class SectorResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Section::make()
-                ->schema([
-                    Forms\Components\TextInput::make('name')->required()->label('اسم القطاع')
-                ])
+                    ->schema([
+                        Forms\Components\TextInput::make('name')->required()->label('اسم القطاع')
+                    ])
             ]);
     }
 
@@ -78,6 +78,6 @@ class SectorResource extends Resource
 
     public static function getNavigationSort(): ?int
     {
-        return 98;
+        return 0;
     }
 }
