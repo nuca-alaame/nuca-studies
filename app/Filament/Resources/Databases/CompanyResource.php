@@ -35,7 +35,7 @@ class CompanyResource extends Resource
             ->schema([
                 Forms\Components\Section::make()
                     ->schema([
-                        Forms\Components\TextInput::make('name')->required()->label('اسم المدينة'),
+                        Forms\Components\TextInput::make('name')->required()->label('اسم الشركة'),
                         Forms\Components\TextInput::make('tax_number')->label('الرقم الضريبي'),
                     ])
             ]);

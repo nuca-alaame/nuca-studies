@@ -1,28 +1,28 @@
 <?php
 
-namespace App\Filament\Resources\ProjectOperationResource\Pages;
+namespace App\Filament\Resources\OperationResource\Pages;
 
-use App\Filament\Resources\ProjectOperationResource;
+use App\Filament\Resources\OperationResource;
 use App\HasParentResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditProjectOperation extends EditRecord
+class EditOperation extends EditRecord
 {
     use HasParentResource;
 
-    protected static string $resource = ProjectOperationResource::class;
+    protected static string $resource = OperationResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            //            Actions\DeleteAction::make(),
         ];
     }
 
     protected function getRedirectUrl(): string
     {
-        return $this->previousUrl ?? static::getParentResource()::getUrl('project-operations.index', [
+        return static::getParentResource()::getUrl('operations.index', [
             'parent' => $this->parent,
         ]);
     }
@@ -32,7 +32,7 @@ class EditProjectOperation extends EditRecord
         $resource = static::getResource();
 
         $action->authorize($resource::canDelete($this->getRecord()))
-            ->successRedirectUrl(static::getParentResource()::getUrl('project-operations.index', [
+            ->successRedirectUrl(static::getParentResource()::getUrl('operations.index', [
                 'parent' => $this->parent,
             ]));
     }

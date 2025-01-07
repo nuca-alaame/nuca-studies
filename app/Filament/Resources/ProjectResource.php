@@ -2,30 +2,25 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ProjectOperationResource\Pages\CreateProjectOperation;
-use App\Filament\Resources\ProjectOperationResource\Pages\EditProjectOperation;
-use App\Filament\Resources\ProjectOperationResource\Pages\ListProjectOperations;
-use App\Filament\Resources\ProjectOperationResource\RelationManagers\OperationsRelationManager;
+use App\Filament\Resources\OperationResource\Pages\CreateOperation;
+use App\Filament\Resources\OperationResource\Pages\EditOperation;
+use App\Filament\Resources\OperationResource\Pages\ListOperations;
+use App\Filament\Resources\OperationResource\Pages\ViewOperation;
 use App\Filament\Resources\ProjectResource\Pages;
-use App\Filament\Resources\ProjectResource\RelationManagers;
+use App\Filament\Resources\ProjectResource\RelationManagers\OperationsRelationManager;
+use App\Models\City;
 use App\Models\Project;
-use App\Models\ProjectOperation;
-use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
 
     protected static ?string $navigationIcon = 'heroicon-m-cube';
-
-    protected static ?string $navigationGroup = 'المشروعات';
 
     protected static ?int $navigationSort = 1;
 
@@ -54,10 +49,9 @@ class ProjectResource extends Resource
                             }),
                         Forms\Components\Select::make('city_id')
                             ->options(function (callable $get) {
-                                // Dynamically fetch cities based on selected sector_id
                                 $sectorId = $get('sector_id');
                                 if ($sectorId) {
-                                    return \App\Models\City::where('sector_id', $sectorId)
+                                    return City::query()->where('sector_id', $sectorId)
                                         ->pluck('name', 'id')
                                         ->toArray();
                                 }
@@ -70,7 +64,7 @@ class ProjectResource extends Resource
                         Forms\Components\DatePicker::make('assignment_date')->required()->label('تاريخ أمر الإسناد'),
                         Forms\Components\TextInput::make('assignment_value')->required()->label('قيمة أمر الإسناد')->numeric(),
                         Forms\Components\TextInput::make('supervisory_authority')->label('جهة الإشراف'),
-                    ])
+                    ]),
             ]);
     }
 
@@ -97,11 +91,12 @@ class ProjectResource extends Resource
                     ->color('success')
                     ->icon('heroicon-m-academic-cap')
                     ->url(
-                        fn(Project $record): string => static::getUrl('project-operations.index', [
+                        fn (Project $record): string => static::getUrl('operations.index', [
                             'parent' => $record->id,
                         ])
                     ),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make()->label(''),
+                Tables\Actions\EditAction::make()->label(''),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -113,7 +108,7 @@ class ProjectResource extends Resource
     public static function getRelations(): array
     {
         return [
-            // OperationsRelationManager::class
+            OperationsRelationManager::class,
         ];
     }
 
@@ -123,9 +118,11 @@ class ProjectResource extends Resource
             'index' => Pages\ListProjects::route('/'),
             'create' => Pages\CreateProject::route('/create'),
             'edit' => Pages\EditProject::route('/{record}/edit'),
-            'project-operations.index' => ListProjectOperations::route('/{parent}/operations'),
-            'project-operations.create' => CreateProjectOperation::route('/{parent}/operations/create'),
-            'project-operations.edit' => EditProjectOperation::route('/{parent}/operations/{record}/edit'),
+            'view' => Pages\ViewProject::route('/{record}'),
+            'operations.index' => ListOperations::route('/{parent}/operations'),
+            'operations.create' => CreateOperation::route('/{parent}/operations/create'),
+            'operations.edit' => EditOperation::route('/{parent}/operations/{record}/edit'),
+            'operations.view' => ViewOperation::route('/{parent}/operations/{record}'),
         ];
     }
 
@@ -134,7 +131,7 @@ class ProjectResource extends Resource
         return 0;
     }
 
-    public static function getRecordTitle(Model|\Illuminate\Database\Eloquent\Model|null $record): string|null
+    public static function getRecordTitle($record): ?string
     {
         return $record->name;
     }

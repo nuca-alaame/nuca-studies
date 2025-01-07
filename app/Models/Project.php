@@ -31,6 +31,6 @@ class Project extends Model
 
     public function operations(): HasMany
     {
-        return $this->hasMany(ProjectOperation::class);
+        return $this->hasMany(Operation::class);
     }
 }

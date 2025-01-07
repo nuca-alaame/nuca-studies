@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Filament\Resources\ProjectOperationResource\Pages;
+namespace App\Filament\Resources\OperationResource\Pages;
 
-use App\Filament\Resources\ProjectOperationResource;
+use App\Filament\Resources\OperationResource;
 use App\HasParentResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListProjectOperations extends ListRecords
+class ListOperations extends ListRecords
 {
     use HasParentResource;
 
-    protected static string $resource = ProjectOperationResource::class;
+    protected static string $resource = OperationResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
             Actions\CreateAction::make()
                 ->url(
-                    fn (): string => static::getParentResource()::getUrl('project-operations.create', [
+                    fn (): string => static::getParentResource()::getUrl('operations.create', [
                         'parent' => $this->parent,
                     ])
                 ),
