@@ -31,7 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->brandName('هيئة المجتمعات العمرانية الجديدة')
-            ->brandLogo(URL::to('img/logo.png'))
+            ->brandLogo(URL::to('img/logo1.png'))
             ->font(family: 'Cairo', url: URL::to('fonts/Cairo-Regular.ttf'), provider: LocalFontProvider::class)
             ->favicon(URL::to('img/logo.png'))
             ->login()
@@ -45,7 +45,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                AccountWidget::class
+                AccountWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
