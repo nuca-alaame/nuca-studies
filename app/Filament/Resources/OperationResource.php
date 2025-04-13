@@ -11,6 +11,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -43,6 +44,7 @@ class OperationResource extends Resource
                 Section::make()
                     ->columns(2)
                     ->schema([
+                        Textarea::make('name')->label('موضوع الدراسة')->required()->columnSpan(2),
                         Select::make('type_id')
                             ->label('سند الدراسة')
                             ->relationship('type', 'name'),
@@ -91,11 +93,12 @@ class OperationResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')->label('#')->alignCenter(),
+                Tables\Columns\TextColumn::make('name')->label('موضوع الدراسة')->wrap()->default('-')->alignCenter(),
                 Tables\Columns\TextColumn::make('operation_date')->label('تاريخ دخول الدراسة للجنة')->searchable()->sortable()->alignCenter(),
                 Tables\Columns\TextColumn::make('type.name')->label('سند الدراسة')->searchable()->sortable()->alignCenter(),
                 Tables\Columns\TextColumn::make('inbox_no')->label('وارد الوحدة الرئيسية')->searchable()->sortable()->alignCenter(),
                 Tables\Columns\TextColumn::make('approval_date')->label('تاريخ الدراسة')->searchable()->sortable()->alignCenter(),
-                Tables\Columns\TextColumn::make('timeframe')->label('النطاق الزمني لتنفيذ الاعمال')->searchable()->sortable()->alignCenter(),
+                Tables\Columns\TextColumn::make('timeframe')->label('النطاق الزمني لتنفيذ الاعمال')->wrap()->searchable()->sortable()->alignCenter(),
                 Tables\Columns\TextColumn::make('balancing_method')->label('أسلوب إعادة التوازن المالي للعقد')->badge()->searchable()->sortable()->alignCenter(),
             ])
             ->filters([

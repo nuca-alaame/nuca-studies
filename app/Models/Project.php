@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Project extends Model
 {
-
     public function category(): BelongsTo
     {
         return $this->belongsTo(ProjectCategory::class);

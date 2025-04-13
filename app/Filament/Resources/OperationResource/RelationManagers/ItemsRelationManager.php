@@ -25,16 +25,16 @@ class ItemsRelationManager extends RelationManager
     public function form(Form $form): Form
     {
         return $form
-            ->columns(4)
+            ->columns(3)
             ->schema([
-                TextInput::make('name')->label('اسم البند')->required()->columnSpan(2),
+                Textarea::make('name')->label('اسم البند')->required()->columnSpan(3)->rows(2),
                 TextInput::make('unit')->label('الوحدة')->required(),
                 TextInput::make('quantity')->label('الكمية')->required(),
                 TextInput::make('price_before')->label('الفئة (قبل المراجعة) ')->numeric()->required(),
                 TextInput::make('price_after')->label('الفئة (بعد المراجعة) ')->numeric(),
                 DatePicker::make('start_date')->label('فترة التنفيذ من')->required(),
                 DatePicker::make('end_date')->label('فترة التنفيذ إلى')->required(),
-                Textarea::make('notes')->label('ملاحظات')->columnSpan(4),
+                Textarea::make('notes')->label('ملاحظات')->columnSpan(3),
             ]);
     }
 
@@ -43,13 +43,28 @@ class ItemsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\TextColumn::make('name')->label('البند')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('name')->label('البند')->wrap(),
                 Tables\Columns\TextColumn::make('unit')->label('الوحدة')->searchable()->sortable()->alignCenter(),
-                Tables\Columns\TextColumn::make('quantity')->label('الكمية')->alignCenter(),
-                Tables\Columns\TextColumn::make('price_before')->label('الفئة (قبل المراجعة)')->alignCenter(),
-                Tables\Columns\TextColumn::make('total_before')->label('الإجمالي (قبل المراجعة)')->badge()->color('info')->alignCenter(),
-                Tables\Columns\TextColumn::make('price_after')->label('الفئة (بعد المراجعة)')->alignCenter(),
-                Tables\Columns\TextColumn::make('total_after')->label('الإجمالي (بعد المراجعة)')->badge()->color('success')->alignCenter(),
+                Tables\Columns\TextColumn::make('quantity')->label('الكمية')->alignCenter()
+                    ->summarize(
+                        Tables\Columns\Summarizers\Sum::make()->label('')
+                    ),
+                Tables\Columns\TextColumn::make('price_before')->label('الفئة (قبل المراجعة)')->alignCenter()
+                    ->summarize(
+                        Tables\Columns\Summarizers\Sum::make()->label('')
+                    ),
+                Tables\Columns\TextColumn::make('total_before')->label('الإجمالي (قبل المراجعة)')->badge()->color('info')->alignCenter()
+                    ->summarize(
+                        Tables\Columns\Summarizers\Sum::make()->label('')
+                    ),
+                Tables\Columns\TextColumn::make('price_after')->label('الفئة (بعد المراجعة)')->alignCenter()
+                    ->summarize(
+                        Tables\Columns\Summarizers\Sum::make()->label('')
+                    ),
+                Tables\Columns\TextColumn::make('total_after')->label('الإجمالي (بعد المراجعة)')->badge()->color('success')->alignCenter()
+                    ->summarize(
+                        Tables\Columns\Summarizers\Sum::make()->label('')
+                    ),
                 Tables\Columns\TextColumn::make('start_date')->label('فترة التنفيذ من')->badge()->alignCenter(),
                 Tables\Columns\TextColumn::make('end_date')->label('فترة التنفيذ إلى')->badge()->alignCenter(),
 

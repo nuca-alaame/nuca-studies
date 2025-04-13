@@ -1,0 +1,10 @@
+import '../../node_modules/preline/dist/preline.js';
+import '../../node_modules/@simonwep/pickr/dist/pickr.min.js';
+import '../../node_modules/@popperjs/core/dist/umd/popper.min.js';
+import '../../node_modules/@popperjs/core/dist/umd/popper.min.js';
+import '../../node_modules/flatpickr/dist/flatpickr.js';
+import '@/assets/js/defaultmenu.js';
+import '@/assets/js/sticky.js';
+import '../../node_modules/simplebar/dist/simplebar.min.js';
+import '@/assets/js/switch.js';
+import '@/assets/js/custom.js';

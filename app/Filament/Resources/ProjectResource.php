@@ -72,10 +72,10 @@ class ProjectResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->label('اسم المشروع')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('name')->label('اسم المشروع')->wrap()->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('city.name')->label('المدينة')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('category.name')->label('نوع المشروع')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('company.name')->label('اسم الشركة')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('company.name')->label('اسم الشركة')->wrap()->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('assignment_no')->label('رقم أمر الإسناد')->searchable()->sortable(),
 
             ])

@@ -1,0 +1,67 @@
+@import "./fonts";
+
+html, body, * {
+  font-family: Cairo, "Noto Naskh Arabic", Inter, Arial, "Lucida Grande", sans-serif;
+  font-size: 9px !important;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "./variables";
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
+
+
+@page {
+  size: a4;
+}
+
+/* Landscape orientation */
+.page-landscape {
+  @page {
+    size: A4 landscape !important;
+  }
+}
+
+*, body {
+  font-family: Cairo, 'Segoe UI Emoji', 'Noto Color Emoji', Arial, sans-serif;
+  margin: 0;
+}
+
+body {
+  background: white !important;
+}
+
+page {
+  background: white;
+  display: block;
+  page-break-before: always;
+  page-break-inside: avoid;
+
+  .page-container {
+    height: 28cm;
+    margin: 0.20rem;
+  }
+}
+
+.font-sans {
+  font-family: "Open Sans", sans-serif;
+}
+
+.page-number {
+  background: transparent;
+  width: 100%;
+  text-align: center;
+  color: #c39945;
+  font-family: Mohanad, Arial, sans-serif;
+  font-weight: bold;
+  position: relative;
+  bottom: 0;
+}
+
+table * {
+  font-size: 9px !important;
+  padding: 0 !important;
+}
